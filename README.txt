@@ -1,0 +1,1 @@
+A toy application to test the conventions and configurations of the FW1 framework.
