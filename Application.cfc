@@ -9,8 +9,8 @@
 		variables.framework.defaultSection = 'main';
 		variables.framework.defaultItem = 'main';
 		variables.framework.reloadApplicationOnEveryRequest = true;
-		variables.framework.suppressImplicitService = true;
-		variables.framework.unhandledPaths = '/units/test.cfm';	
+		// Switch ON Implicit Service Calls
+		variables.framework.suppressImplicitService = false;
 	
 	public function onRequestEnd() {
 		writeoutput('<hr />');

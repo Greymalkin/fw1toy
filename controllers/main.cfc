@@ -17,9 +17,13 @@
 	public void function main(struct rc) {
 		rc.theMethod = 'The Item call';				
 		rc.setFromController = 'Middle';
+		variables.fw.service("main.main", "queued");		// Queue an Implicit Service Call
 	}
-	
+
+	// This is the point in the Controller Cycle where an automatic implicit service call should happen
+		
 	public void function endMain(struct rc) {
+		// This is the point in the Controller Cycle where the queued implicit service call should happen.
 		rc.endMethod = 'End item call';
 		rc.setFromController = 'End';		
 	}
