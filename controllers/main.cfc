@@ -1,6 +1,7 @@
 <cfcomponent output="false"><cfscript>
 	public void function init(fw) {
 		variables.fw = fw;
+		variables.mainService = createObject("component", "fw1toy.services.main");
 	}
 
 	public void function before(struct rc) {
@@ -17,13 +18,14 @@
 	public void function main(struct rc) {
 		rc.theMethod = 'The Item call';				
 		rc.setFromController = 'Middle';
-		variables.fw.service("main.main", "queued");		// Queue an Implicit Service Call
+		variables.fw.service("main.main", "queued");		// Queue an implicit service call
+		rc.explicit = variables.mainService.main();			// Immediately run an explicit service call
 	}
 
 	// This is the point in the Controller Cycle where an automatic implicit service call should happen
 		
 	public void function endMain(struct rc) {
-		// This is the point in the Controller Cycle where the queued implicit service call should happen.
+		// This is the point in the Controller Cycle where the queued implicit service call should happen
 		rc.endMethod = 'End item call';
 		rc.setFromController = 'End';		
 	}
