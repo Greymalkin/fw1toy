@@ -4,12 +4,12 @@
 	}
 
 	public void function main(struct rc) {
-		rc.testAutowire = variables.mainService.main();
+		rc.testAutowire = main.main();
 	}
-
+	
 	// Autowired Service Setup
-	public void function setMainService(any mainService) {
-		variables.mainService = arguments.mainService;
+	public void function setMain(any main) {
+		variables.main = arguments.main;
 	}
 
 </cfscript>
