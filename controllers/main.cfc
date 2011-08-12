@@ -1,39 +1,16 @@
 <cfcomponent output="false"><cfscript>
 	public void function init(fw) {
 		variables.fw = fw;
-		variables.mainService = createObject("component", "fw1toy.services.main");
 	}
 
-	public void function before(struct rc) {
-		rc.beforeMethod = 'Before got called';
-		rc.setFromController = 'Before';
-	}
-	
-	public void function startMain(struct rc) {
-		rc.startMethod = 'Start Item call';
-		rc.setFromController = 'Beginning';
-		rc.title = 'Start Item Changes the Title';
-	}
-	
 	public void function main(struct rc) {
-		rc.theMethod = 'The Item call';				
-		rc.setFromController = 'Middle';
-		variables.fw.service("main.main", "queued");		// Queue an implicit service call
-		rc.explicit = variables.mainService.main();			// Immediately run an explicit service call
+		rc.testAutowire = variables.mainService.main();
 	}
 
-	// This is the point in the Controller Cycle where an automatic implicit service call should happen
-		
-	public void function endMain(struct rc) {
-		// This is the point in the Controller Cycle where the queued implicit service call should happen
-		rc.endMethod = 'End item call';
-		rc.setFromController = 'End';		
+	// Autowired Service Setup
+	public void function setMainService(any mainService) {
+		variables.mainService = arguments.mainService;
 	}
-	
-	public void function after(struct rc) {
-		rc.afterMethod = 'After wraps it up';
-		rc.SetFromController = 'Denoument';
-	}
-	
+
 </cfscript>
 </cfcomponent>
