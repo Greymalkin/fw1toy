@@ -20,9 +20,9 @@
 	
 	public function setupApplication() {
 	    // instantiate N. Dintenfass bean factory
-	    serviceFactory = createObject("component","services.servicefactory");
+	    serviceFactory = createObject("component","model.services.servicefactory");
 		// register my service with the factory
-	    serviceFactory.registerService( "main", createObject("component","services.main") );
+	    serviceFactory.registerService( "main", createObject("component","model.services.main") );
 	    //set the beanFactory
 	    setBeanFactory(serviceFactory);		
 	}
