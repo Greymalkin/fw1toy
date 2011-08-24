@@ -6,10 +6,13 @@
 
 	// FW/1 - configuration:
 	variables.framework = {};
+		// setup subsystems
+		variables.framework.usingSubsystems = true;
+		variables.framework.siteWideLayoutSybsystem = 'common';
+		variables.framework.defaultSubsystem = 'toy';
 		variables.framework.defaultSection = 'main';
 		variables.framework.defaultItem = 'main';
 		variables.framework.reloadApplicationOnEveryRequest = true;
-		// Switch OFF Implicit Service Calls
 		variables.framework.suppressImplicitService = true;
 	
 	public function onRequestEnd() {
@@ -21,9 +24,7 @@
 	public function setupApplication() {
 	    // instantiate N. Dintenfass bean factory
 	    serviceFactory = createObject("component","model.services.servicefactory");
-		// register my service with the factory
 	    serviceFactory.registerService( "main", createObject("component","model.services.main") );
-	    //set the beanFactory
 	    setBeanFactory(serviceFactory);		
 	}
 </cfscript>
