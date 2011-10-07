@@ -96,6 +96,13 @@ margin-left: -250px; /*width of left column*/
 width: 225px; /*width of labels. Should be smaller than left column (155px) to create some right margin*/
 }
 
+.cssform #form-wrapper label{
+font-weight: bold;
+float: left;
+margin-left: inherit;
+width: 225px; /*width of labels. Should be smaller than left column (155px) to create some right margin*/
+}
+
 .cssform input[type="text"]{ /*width of text boxes. IE6 does not understand this attribute*/
 width: 300px;
 }
@@ -159,6 +166,6 @@ label.align-to-required {
 	width: 700px;
 }
 
-#contract-form-wrapper {
+#form-wrapper {
 	padding-left: 30px;
 }
