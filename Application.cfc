@@ -6,14 +6,11 @@
 
 	// FW/1 - configuration:
 	variables.framework = {};
-		// setup subsystems
-		variables.framework.usingSubsystems = true;
-		variables.framework.siteWideLayoutSybsystem = 'common';
-		variables.framework.defaultSubsystem = 'toy';
 		variables.framework.defaultSection = 'main';
 		variables.framework.defaultItem = 'main';
 		variables.framework.reloadApplicationOnEveryRequest = true;
-		variables.framework.suppressImplicitService = true;
+		// Implicit Service Calls turned OFF by default as of FW/1 2.0, and must use FW/1 2.0 to get DI/1 
+		// variables.framework.suppressImplicitService = true;
 	
 	public function onRequestEnd() {
 		writeoutput('<hr />');
@@ -22,10 +19,10 @@
 	}	
 	
 	public function setupApplication() {
-	    // instantiate N. Dintenfass bean factory
-	    serviceFactory = createObject("component","model.services.servicefactory");
-	    serviceFactory.registerService( "main", createObject("component","model.services.main") );
-	    setBeanFactory(serviceFactory);		
+	    // DI/1 Bean Factory (bf)
+	    variables.bf = new model.ioc( "/fw1toy/model" ); 
+		// manage entire application with DI/1:
+		setBeanFactory( bf );
 	}
 </cfscript>
 </cfcomponent>
