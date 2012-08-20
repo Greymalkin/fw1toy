@@ -6,6 +6,10 @@
 
 	// FW/1 - configuration:
 	variables.framework = {};
+		// setup subsystems
+		variables.framework.usingSubsystems = true;
+		variables.framework.siteWideLayoutSybsystem = 'common';
+		variables.framework.defaultSubsystem = 'toy';
 		variables.framework.defaultSection = 'main';
 		variables.framework.defaultItem = 'main';
 		variables.framework.reloadApplicationOnEveryRequest = true;
@@ -14,15 +18,21 @@
 	
 	public function onRequestEnd() {
 		writeoutput('<hr />');
-		writedump(var=variables, showUDfs=false, expand=false, label='Variables');
+		//writedump(var=variables, showUDfs=false, expand=false, label='Variables');
 		writedump(var=request, showUDfs=false, expand=true, label='Request');		
 	}	
 	
 	public function setupApplication() {
 	    // DI/1 Bean Factory (bf)
-	    variables.bf = new model.ioc( "/fw1toy/model" ); 
+	    variables.bf = new model.ioc( "/fw1toy/model", {strict="true" }); 
 		// manage entire application with DI/1:
 		setBeanFactory( bf );
+		bf.addAlias("sampleuser", "user_sampleData");
+	}
+
+	public function setupRequest() {
+	    // do the security checks
+	    controller( "auth:main.main" );
 	}
 </cfscript>
 </cfcomponent>
