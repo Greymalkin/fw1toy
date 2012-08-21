@@ -10,6 +10,19 @@ Difference between tag v.0.0.6 and tag v.0.0.6_d1i:
 Application.cfc
 * Change setupApplication() to instantiate Di/1
 * Remove ServiceFactory.cfc from setupApplication()
+* Add setupRequest() to force authentication
 
 Model/beans/main.cfc
 * Move model/services/main.cfc to new location
+
+Model/managers/beans/user_sampledata.cfc
+* Mocking up a set of User data
+
+Authentication Subsystem
+Auth/Controllers/main.cfc
+* Added security routine that forces user to view a login form unless they are on a page that is excluded from being secured
+* Borrowed security routine from  http://www.aliaspooryorik.com/blog/index.cfm/e/posts.details/post/simple-security-in-fw-1-336
+
+Toy Subsystem
+Toy/controllers/main.cfc
+* Still nothing substantive, just changing the cfc so that mainbean is autowired via DI/1
