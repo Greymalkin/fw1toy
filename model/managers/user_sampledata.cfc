@@ -38,8 +38,8 @@
 	<cffunction name="notloggedin"><cfscript>
 	user = {};
 	user.auth = { LoggedIn = false,
-		username = "workera",
-		password = "workera",
+		username = "",
+		password = "",
 		role = ""
 	};
 	user.personnel = { };
