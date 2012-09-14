@@ -12,8 +12,9 @@
     // white list is a comma delimited list of regular expressions to match unsecure actions
     // NOTE: I don't have a Public subsection yet but it is an idea I may pursue at some point
     var whitelist = "^public:,^auth:";
-    var loggedin = variables.sampleuser.hasCurrentUser( "notloggedin" );
-    
+// DEBUG I'm faking the results of a login here... will always return FALSE
+// DEV NOTE: For real life behavior, needs to read session scope for a user object and read that user.auth.loggedin value
+    var loggedin = variables.sampleuser.hasCurrentUser( "notloggedin" );  
     if ( !loggedin ) {
       // loop whitelist
       for ( var unsecured in ListToArray( whitelist ) ) {
