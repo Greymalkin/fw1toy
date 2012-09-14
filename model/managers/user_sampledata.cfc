@@ -17,24 +17,6 @@
 		</cfscript>
 	</cffunction>
 
-	<cffunction name="getUser">
-		<cfargument name="username" type="string" required="true">
-		<cfargument name="password" type="string" required="true">
-		<cfscript>
-			if (username eq "admin" and password eq "admin") {
-				return admindata();
-			}
-			if (username eq "workera" and password eq "workera") {
-				return workeradata();
-			}
-			if (username eq "visitor" and password eq "visitor") {
-				return visitordata();
-			}
-			return notloggedin();
-
-		</cfscript>
-	</cffunction>
-
 	<cffunction name="notloggedin"><cfscript>
 	user = {};
 	user.auth = { LoggedIn = false,

@@ -18,8 +18,8 @@
 	
 	public function onRequestEnd() {
 		writeoutput('<hr />');
-		//writedump(var=variables, showUDfs=false, expand=false, label='Variables');
-		writedump(var=request, showUDfs=false, expand=true, label='Request');		
+		writedump(var=session, showUDfs=false, expand=false, label='Session');
+		writedump(var=request, showUDfs=false, expand=false, label='Request');		
 	}	
 	
 	public function setupApplication() {

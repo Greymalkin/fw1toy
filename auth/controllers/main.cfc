@@ -1,5 +1,6 @@
 <cfcomponent output="false" accessors="true">
-	<cfproperty name="sampleuser"><cfscript>
+	<cfproperty name="usermanager">
+  <cfproperty name="sampleuser"><cfscript>
 	public any function init(fw) {
 		variables.fw = fw;
 		return this;
@@ -14,7 +15,7 @@
     var whitelist = "^public:,^auth:";
 // DEBUG I'm faking the results of a login here... will always return FALSE
 // DEV NOTE: For real life behavior, needs to read session scope for a user object and read that user.auth.loggedin value
-    var loggedin = variables.sampleuser.hasCurrentUser( "notloggedin" );  
+    var loggedin = variables.usermanager.hasCurrentUser( "notloggedin" );  
     if ( !loggedin ) {
       // loop whitelist
       for ( var unsecured in ListToArray( whitelist ) ) {
@@ -28,17 +29,19 @@
         variables.fw.redirect( "auth:main" );
       }
     }
-// DEBUG    writeDump(var="#local#");    request.layout = false;
+// DEBUG    writeDump(var="#local#", label="local @auth.controllers.main");    
 	}	
 
 
 	public void function dologin(any rc) {
-	/* Will use this method to validate authentication credentials. */
-
-	var user = variables.sampleuser.getUser( rc.loginid, rc.password);
-	writedump(var="#local#", abort="true", label="local@ doLogin()");
-
-
+  	/* Will use this method to validate authentication credentials. */
+  	var user = variables.usermanager.getUser( rc.loginid, rc.password);
+  	writedump(var="#local#", abort="true", label="local@ doLogin()");
 	}	
+
+  public void function dologout(any rc) {
+    structclear(session);
+    variables.fw.setView("auth:main.main");
+  }
 
 </cfscript></cfcomponent>
