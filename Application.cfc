@@ -31,8 +31,9 @@
 	}
 
 	public function setupRequest() {
-	    // do the security checks
+		// security check
 	    controller( "auth:main.main" );
 	}
+
 </cfscript>
 </cfcomponent>

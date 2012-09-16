@@ -2,12 +2,11 @@
 	<cfproperty name="sampleuser">
 
 	<cffunction name="hasCurrentUser">
-		<cfargument name="sample" type="string" required="true">
 		<cfscript>
 			if (structkeyexists(session, "user")) {
-				return true;
+				return session.user.auth.loggedin;
 			}
-			return variables.sampleuser.hasCurrentUser ("notloggedin");		//( arguments.sample ); 
+			return sampleuser.hasCurrentUser ("notloggedin");
 		</cfscript>
 	</cffunction>
 
@@ -34,9 +33,16 @@
 				persistUser(userData);
 				return userData;
 			}
-			return variables.sampleuser.notloggedin();
+			return sampleuser.notloggedin();
 
 		</cfscript>
+	</cffunction>
+
+	<cffunction name="setSendMeToAfterLogin" returntype="void" hint="capture only the first page requested. the login form will interrupt delivery of this page.">
+		<cfargument name="toAction" type="string" required="true">
+		<cfif not isdefined("session.sendMeTo")>
+			<cfset session.sendMeToAfterLogin = arguments.toAction>
+		</cfif>
 	</cffunction>
 
 </cfcomponent>

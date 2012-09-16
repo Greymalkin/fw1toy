@@ -1,6 +1,5 @@
 <cfcomponent output="false" accessors="true">
-	<cfproperty name="usermanager">
-  <cfproperty name="sampleuser"><cfscript>
+	<cfproperty name="usermanager"><cfscript>
 	public any function init(fw) {
 		variables.fw = fw;
 		return this;
@@ -13,35 +12,46 @@
     // white list is a comma delimited list of regular expressions to match unsecure actions
     // NOTE: I don't have a Public subsection yet but it is an idea I may pursue at some point
     var whitelist = "^public:,^auth:";
-// DEBUG I'm faking the results of a login here... will always return FALSE
-// DEV NOTE: For real life behavior, needs to read session scope for a user object and read that user.auth.loggedin value
-    var loggedin = variables.usermanager.hasCurrentUser( "notloggedin" );  
+    // check user.auth.loggedin value & force login form
+    var loggedin = usermanager.hasCurrentUser( );  
     if ( !loggedin ) {
       // loop whitelist
       for ( var unsecured in ListToArray( whitelist ) ) {
-        if ( ReFindNoCase( unsecured, variables.fw.getFullyQualifiedAction() ) != 0 ) {
+        if ( ReFindNoCase( unsecured, fw.getFullyQualifiedAction() ) != 0 ) {
           securearea = false;
           break;
         }
       }
       if ( securearea ) {
         // secure area so redirect to login form
-        variables.fw.redirect( "auth:main" );
+        userManager.setSendMeToAfterLogin(rc.action);
+        fw.redirect( "auth:main" );
       }
     }
-// DEBUG    writeDump(var="#local#", label="local @auth.controllers.main");    
 	}	
 
 
 	public void function dologin(any rc) {
   	/* Will use this method to validate authentication credentials. */
-  	var user = variables.usermanager.getUser( rc.loginid, rc.password);
-  	writedump(var="#local#", abort="true", label="local@ doLogin()");
+  	var user = usermanager.getUser( rc.loginid, rc.password);
+    if (user.auth.loggedin) {
+      try{
+        // Login passed
+        fw.redirect( session.sendMeToAfterLogin );  
+        // If you navigate direct to login page?  Catch that error and redirect to home page.  
+        // If session expires before you submit a form, that may throw error too if form data expired (haven't tested)
+      }  catch (expression e) {
+        fw.redirect ("toy:main.main") ;
+      }      
+    } 
+    // Login failed
+    fw.setView("auth:main.main");
+    //writedump(var="#local#", label="local@ doLogin()", expand="false");
 	}	
 
   public void function dologout(any rc) {
     structclear(session);
-    variables.fw.setView("auth:main.main");
+    fw.setView("auth:main.main");
   }
 
 </cfscript></cfcomponent>

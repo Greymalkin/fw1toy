@@ -3,7 +3,7 @@
 		This cfc sets up some sample data models that I can call to make the application behave some kind of way.
  --->
 
-<cfcomponent>
+<cfcomponent output="false">
 <!--- DEV NOTE: Change so that the argument is not required
 	* Then if the argument is passed in it can behave this way
 	* But if argument is not passed in it looks at the session scope for a user object and returns user.auth.loggedin
@@ -12,7 +12,6 @@
 		<cfargument name="sample" type="string" required="true">
 		<cfscript>
 			var method = this[ arguments.sample];			
-//DEBUG  	var test = method();	writedump(var="#local#", abort="true");
 			return method().auth.loggedIn;
 		</cfscript>
 	</cffunction>
